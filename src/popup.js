@@ -4,7 +4,8 @@ import Item from './item';
 import './popup.css';
 
 export default function PopupButton(props) {
-  // props items ---shoppingCartItems
+  // props items ---shoppingCartItem
+  //       remove --- removeItem
   let totalPrice = props.items.reduce((total,item)=> total + item.discountedPrice,0);
   return (
     <Popup className ="popup-button"
@@ -14,7 +15,7 @@ export default function PopupButton(props) {
         <div className="shopping-cart">
           {/* pop out content here */}
           {props.items.map((item, index) => (
-            <Item className="shopping-cart-item" item={item} key={index}/>
+            <Item className="shopping-cart-item" item={item} key={index} remove={props.remove} index={index}/>
            )) 
            }
           <div className="sub-total">

@@ -1,5 +1,9 @@
-
-
+html{
+  background-color: rgb(187, 194, 194);
+}
+.popup-content.popup-button-content{
+  background: rgb(211, 205, 205) !important;
+}
 
 
 .App .container {

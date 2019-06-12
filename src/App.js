@@ -96,6 +96,14 @@ class App extends React.Component {
     })
 
   }
+
+  removeItem = (index) =>{
+    const{ boxes, shoppingCartItems } = this.state
+    this.setState({ 
+      shoppingCartItems: shoppingCartItems.filter((item,i)=> i !== index)
+    })
+
+  }
   render(){
       const { boxes, size,shoppingCartItems } = this.state     
       return (
@@ -116,7 +124,7 @@ class App extends React.Component {
             </div>
 
             <div className="cart">
-              {<PopupButton items ={shoppingCartItems}/>}
+              {<PopupButton items ={shoppingCartItems} remove={this.removeItem}/>}
               
             </div>
 
