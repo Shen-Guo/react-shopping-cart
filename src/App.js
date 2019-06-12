@@ -90,10 +90,21 @@ class App extends React.Component {
   }
   addItem = (box) =>{
     const{ boxes, shoppingCartItems } = this.state
-    box = {...box,quantity:1}
-    this.setState({ 
-      shoppingCartItems: [...shoppingCartItems, box]
+    let ids = []
+    shoppingCartItems.forEach(box =>{
+      ids.push(box.id)
     })
+    
+    if(!ids.includes(box.id)){
+      box = {...box,quantity:1}
+      this.setState({ 
+        shoppingCartItems: [...shoppingCartItems, box]
+      })
+    }else{
+      // increase the quantity not adding the box
+      shoppingCartItems.find(item => item.id === box.id).quantity += 1
+      this.setState({ shoppingCartItems })
+    }
 
   }
 

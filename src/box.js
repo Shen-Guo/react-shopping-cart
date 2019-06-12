@@ -15,7 +15,7 @@ export default function Box(props){
         <p className="orignal-price"><span>$</span> {props.box.originalPrice}</p>
         <p className="discounted-price"><span>$</span> {props.box.discountedPrice}</p>
       </div>
-      <button onClick = {() => props.addItem(props.box)}>Add to Cart</button>
+      <button clasName="add-btn"onClick = {() => props.addItem(props.box)}>Add to Cart</button>
      
     </div>
   )

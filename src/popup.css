@@ -1,10 +1,6 @@
 
-/* 
-element.style {
-  
-  background:  rgb(75, 73, 73);
-  
-} */
+ 
+
 .trigger-btn{
   font-size: 2rem;
 }
@@ -47,7 +43,7 @@ element.style {
   width: 20%;
 }
 .shoppingcart-item .d.descriptions{
-  width: 55%;
+  width: 50%;
 }
 
 .shoppingcart-item img{

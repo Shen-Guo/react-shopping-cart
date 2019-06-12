@@ -38,9 +38,18 @@ html{
 .App .container .dress-container .dress-box{
   width: 30%;
   margin: 10px;
+  text-align: center;
+}
+
+.App .container .dress-container .dress-box:hover{
+ border: 1px solid rgb(105, 105, 105);
 }
 .App .container .dress-container .dress-box img{
   width: 100%;
+}
+
+ .dress-box .add-btn :hover{
+  background-color: rgb(241, 159, 6);
 }
 .App .container .dress-container .dress-box .orignal-price{
   text-decoration: line-through;
