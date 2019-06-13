@@ -1,63 +1,26 @@
 import React from 'react';
-import Box from './box';
-import Popup from 'reactjs-popup'
-import PopupButton from './popup'
+import { Switch, Route } from 'react-router-dom'
+import Invoice from './invoice'
 // import logo from './logo.svg';
+import ShoppingCart from './ShoppingCart'
 import './App.css';
 
-class App extends React.Component {
-  state = {
-    boxes: [{
-              id : 1,
-              imgUrl:"clothes/dress1.jpg",
-              title:"Check PInafore Dress",
-              originalPrice: 49.95,
-              discountedPrice:39.95,
-              size: "M"
-            },
-            {
-              id : 2,
-              imgUrl:"clothes/dress2.jpg",
-              title:"Dream Chaser Button Dress-Rosy",
-              originalPrice: 69.95,
-              discountedPrice:45.00,
-              size: "M"
-            },
-          {
-            id : 3,
-            imgUrl:"clothes/dress3.jpg",
-            title:"Dream Chaser Button Dress-white",
-            originalPrice: 69.95,
-            discountedPrice:45.00,
-            size: "L"
-          },
-          {
-            id: 4,
-            imgUrl:"clothes/dress4.jpg",
-            title:"Dream Chaser Button Dress -Black",
-            originalPrice: 69.95,
-            discountedPrice:45.00,
-            size: "L"
-          },
-          {
-            id:5,
-            imgUrl:"clothes/dress5.jpg",
-            title:"Pleated Skirt Midi Dress",
-            originalPrice: 99.95,
-            discountedPrice:59.97,
-            size: "S"
-          },
-          {
-            id: 6,
-            imgUrl:"clothes/dress6.jpg",
-            title:"Watercolor Floral Apron Front Dress",
-            originalPrice: 89.95,
-            discountedPrice: 53.97,
-            size: "S"
-          }],
+export default class App extends React.Component {
+
+  state ={
+    boxes: [],
     shoppingCartItems: [],
     size: null
-
+  }
+  componentDidMount() {
+    // fetch('/endpoint')
+    //   .then(res => res.json())
+    //   .then(res => this.setState({ boxes: res.boxes }))
+    const url ="http://localhost:8888/api/dresses"// front end
+    fetch(url).then(res => res.json())
+              .then(res => this.setState({ boxes: res.boxes,
+                                          shoppingCartItems:res.shoppingCartItems, size: res.size}))
+                
   }
 
   filterBox =(size) => {
@@ -66,6 +29,7 @@ class App extends React.Component {
       boxes: boxes.filter((box)=> box.size == size)
     })
 
+  
   }
 
   changeSize = (size) => {
@@ -89,7 +53,7 @@ class App extends React.Component {
 
   }
   addItem = (box) =>{
-    const{ boxes, shoppingCartItems } = this.state
+    const{ shoppingCartItems } = this.state
     let ids = []
     shoppingCartItems.forEach(box =>{
       ids.push(box.id)
@@ -115,64 +79,25 @@ class App extends React.Component {
     })
 
   }
+
+
   render(){
-      const { boxes, size,shoppingCartItems } = this.state     
-      return (
-        <div className="App">
-          <header>
-            <h1>Dress Shop</h1>
-          </header>
-          <div className="sub-header">
-            <div className="sorter">
-              <label htmlFor="">Order by</label>
-              <div className="select-box">    
-                <select onChange={this.sortOrder}>
-                  <option value="0">select</option>
-                  <option value="1">price lowest to highest</option>
-                  <option value="2">price highest to lowest</option>            
-                </select>
-                </div>
-            </div>
+    const{ boxes,shoppingCartItems,size } = this.state
+    return (
+      <Switch>
+        <Route path='/invoice' render={()=><Invoice shoppingCartItems={shoppingCartItems}/>} />
+        <Route path='/' render={() => {
+          return <ShoppingCart filterBox={this.filterBox} 
+                               changeSize={this.changeSize}
+                               sortOrder={this.sortOrder}
+                               addItem={this.addItem}
+                               removeItem={this.removeItem}
+                               boxes={boxes}
+                               shoppingCartItems={shoppingCartItems}
+                               size={size}/>
+        }} />
+      </Switch>
+    )
 
-            <div className="cart">
-              {<PopupButton items ={shoppingCartItems} remove={this.removeItem}/>}
-              
-            </div>
-
-          </div>
-
-          <div className="container">
-            <div className="sidebar">
-              <label htmlFor="">Size</label>
-              <div>
-                <button onClick = {() => this.changeSize("S")}>S</button>
-                <button onClick ={() => this.changeSize("M")}>M</button>
-                <button onClick ={() => this.changeSize("L")}>L</button>
-                <button onClick ={() => this.changeSize(null)}>All</button>
-              </div>
-            </div>
-
-            <div className="dress-container">
-              {              
-                size ? boxes
-                  .filter(box => box.size === size)
-                  .map((box, index) => (
-                    <Box key={index} box={box} addItem ={this.addItem}/>
-                  )) :
-                  boxes        
-                  .map((box, index) => (
-                    <Box key={index} box={box} addItem ={this.addItem}/>
-                  )) 
-
-              }
-            </div>
-
-          </div>
-      </div>
-      );
-
-    }
-}
-
-export default App;
-
+  }
+  }

@@ -2,6 +2,10 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import Item from './item';
 import './popup.css';
+import {useSpring, animated} from 'react-spring'
+
+import { Switch,Route, Link, Redirect} from 'react-router-dom'
+import Invoice from './invoice';
 
 export default function PopupButton(props) {
   // props items ---shoppingCartItem
@@ -24,7 +28,7 @@ export default function PopupButton(props) {
             <p><span>$</span> {totalPrice.toFixed(2)}</p>
           </div>
           <div className="checkout">
-            <button className="checkout-btn">Check Out</button>
+            <button className="checkout-btn"><Link to="/invoice">Check Out</Link></button>
           </div>
           <a className="close" onClick={close}>
             &times;
@@ -34,3 +38,10 @@ export default function PopupButton(props) {
     </Popup>
   )
 }
+
+
+
+  
+
+
+
